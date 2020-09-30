@@ -50,7 +50,7 @@ class LoginController extends Controller
         if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
             // 该用户存在于数据库，且邮箱和密码相符合
             session()->flash('success', '登录成功');
-            return redirect()->route('home');
+            return redirect()->route('index');
         } else {
             session()->flash('danger', '很抱歉，您的用户名和密码不匹配');
             return redirect()->back()->withInput();

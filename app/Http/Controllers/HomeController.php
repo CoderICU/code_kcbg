@@ -24,8 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Code::create();
-        // $maxNo = Code::findMaxSn();
+
         return view('home');
     }
 }
