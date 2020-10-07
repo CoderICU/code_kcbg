@@ -10,7 +10,11 @@ class IndexController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('index');
+            if (isMobile()) {
+                return view('index');
+            } else {
+                return view('home');
+            }
         } else {
             return redirect()->route('login');
         }
