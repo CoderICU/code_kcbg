@@ -17,4 +17,20 @@ class AttributesController extends Controller
         $attrs = Attribute::paginate(20);
         return view('attrs.index', compact('attrs'));
     }
+
+    public function store(Request $request)
+    {
+        $rules = [
+            'name' => 'unique:attributes'
+        ];
+        $message = [
+            'name.unique' => '规格已存在'
+        ];
+        $this->validate($request, $rules, $message);
+        $attr = Attribute::create([
+            'name' => $request->name,
+            'type' => $request->type
+        ]);
+        return json_encode(['code'=> compact('attr')]);
+    }
 }

@@ -20,11 +20,11 @@
               <form>
                 <div class="form-group">
                   <label for="attr-name" class="col-form-label">名称:</label>
-                  <input type="text" class="form-control" id="attr-name">
+                  <input type="text" class="form-control" id="attr-name" v-model="new_attr.name">
                 </div>
                 <div class="form-group">
                   <label for="attr-type" class="col-form-label">类型:</label>
-                  <select class="form-control" id="attr-type">
+                  <select class="form-control" id="attr-type" v-model="new_attr.type">
                     <option value="text">文本</option>
                     <option value="time">时间</option>
                     <option value="img">图片</option>
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-              <button type="button" class="btn btn-primary">保存</button>
+              <button type="button" class="btn btn-primary" v-on:click="saveAttr">保存</button>
             </div>
           </div>
         </div>
@@ -66,6 +66,64 @@
           </tr>
         </tbody>
     </table>
-
 </div>
+
+
+@endsection
+
+@section('body-tail')
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            new_attr: {
+                name: '',
+                type: '',
+            }
+        },
+        methods: {
+            saveAttr: function () {
+                if (this.new_attr.name == '') {
+                    alert('请输入规格名称');
+                } else if (this.new_attr.type == '') {
+                    alert('请选择规格类型');
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: "attrs",
+                        dataType: 'json',
+                        data: {
+                            'name': this.new_attr.name,
+                            'type': this.new_attr.type,
+                            '_token':'{{csrf_token()}}'
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            if (data.code == '200') {
+                                console.log(data);
+                            } else {
+                                alert(data.msg?data.msg:'保存失败');
+                            }
+                        },
+                        error: function (msg) {
+                            if (msg.status == 422) {
+                                var json=JSON.parse(msg.responseText);
+                                json = json.errors;
+                                for ( var item in json) {
+                                    for ( var i = 0; i < json[item].length; i++) {
+                                        alert(json[item][i]);
+                                        return ; //遇到验证错误，就退出
+                                    }
+                                }
+                            } else {
+                                alert('服务器连接失败');
+                                return ;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    })
+</script>
 @endsection
