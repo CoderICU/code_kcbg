@@ -31,6 +31,6 @@ class AttributesController extends Controller
             'name' => $request->name,
             'type' => $request->type
         ]);
-        return json_encode(['code'=> compact('attr')]);
+        return json_encode(['code'=> 200, 'msg'=> '保存成功']);
     }
 }

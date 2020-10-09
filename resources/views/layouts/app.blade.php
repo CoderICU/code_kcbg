@@ -11,8 +11,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script language="JavaScript" src="{{ URL::asset('/') }}js/vue.js"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script language="JavaScript" src="{{ URL::asset('/') }}vue/vue.js"></script>
+    <script language="JavaScript" src="{{ URL::asset('/') }}layer/layer.js"></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

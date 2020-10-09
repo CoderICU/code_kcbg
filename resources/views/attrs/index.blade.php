@@ -43,27 +43,38 @@
     <table class="table table-bordered" style="background-color: #fff; margin-top: 8px;">
         <thead>
           <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-          </tr>
-          <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td>mary@example.com</td>
-          </tr>
-          <tr>
-            <td>July</td>
-            <td>Dooley</td>
-            <td>july@example.com</td>
-          </tr>
+            @foreach ($attrs as $attr)
+            <tr>
+                <td>{{ $attr->name }}</td>
+                @switch($attr->type)
+                    @case('text')
+                        <td>文本</td>
+                        @break
+                    @case('img')
+                        <td>图片</td>
+                        @break
+                    @case('time')
+                        <td>时间</td>
+                        @break
+                    @default
+                        <td>其它</td>
+                @endswitch
+
+                <td>
+                    <form action="{{ route('attrs.destroy', $attr->id) }}" method="post" class="folat-right">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button type="submit" class="btn btn-sm btn-danger delete-btn">删除</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -98,9 +109,8 @@
                             '_token':'{{csrf_token()}}'
                         },
                         success: function (data) {
-                            console.log(data);
                             if (data.code == '200') {
-                                console.log(data);
+                                layer.msg('保存成功');
                             } else {
                                 alert(data.msg?data.msg:'保存失败');
                             }
