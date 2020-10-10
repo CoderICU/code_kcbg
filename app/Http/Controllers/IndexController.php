@@ -13,10 +13,11 @@ class IndexController extends Controller
             if (isMobile()) {
                 return view('index');
             } else {
-                return view('home');
+                return view('index');
             }
         } else {
             return redirect()->route('login');
         }
     }
+
 }

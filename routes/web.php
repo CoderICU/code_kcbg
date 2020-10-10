@@ -23,3 +23,6 @@ Route::get('/', 'IndexController@index')->name('index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('attrs', 'AttributesController');
+
+Route::get('/qr/newqr', 'QrcodeController@newqr')->name('newqr');
+Route::get('/qr/deqr', 'QrcodeController@deqr')->name('deqr');

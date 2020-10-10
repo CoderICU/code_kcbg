@@ -65,7 +65,6 @@
                     @default
                         <td>其它</td>
                 @endswitch
-
                 <td>
                     <form action="{{ route('attrs.destroy', $attr->id) }}" method="post" class="folat-right">
                         {{ csrf_field() }}
@@ -77,6 +76,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="mt-3">
+        {!! $attrs->render() !!}
+    </div>
 </div>
 
 
@@ -111,6 +113,8 @@
                         success: function (data) {
                             if (data.code == '200') {
                                 layer.msg('保存成功');
+                                $('#exampleModal').modal('hide')
+                                document.location.reload();
                             } else {
                                 alert(data.msg?data.msg:'保存失败');
                             }

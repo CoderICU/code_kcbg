@@ -33,4 +33,10 @@ class AttributesController extends Controller
         ]);
         return json_encode(['code'=> 200, 'msg'=> '保存成功']);
     }
+
+    public function destroy(Attribute $attr)
+    {
+        $attr->delete();
+        return redirect()->back();
+    }
 }
